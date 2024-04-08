@@ -4,7 +4,7 @@
     die("Connection failed: " . mysqli_connect_error());*/
 
     // PHP Data Objects(PDO) Sample Code:
-    try {
+   try {
         $conn = new PDO("sqlsrv:server = tcp:jptodo.database.windows.net,1433; Database = todoapp", "jp", "myphpserver@1234");
         $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
     }

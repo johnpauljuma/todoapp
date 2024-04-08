@@ -1,5 +1,3 @@
-// add_task.php
-
 <?php
 require_once 'config.php';
 
@@ -10,10 +8,10 @@ if (isset($_POST['add'])) {
         $date = $_POST['date'];
 
         // Prepare the SQL statement
-        $stmt = $db->prepare("INSERT INTO `task` (`task_id`, `status`, `date`) VALUES (?, 'Pending', ?)");
+        $stmt = $db->prepare("INSERT INTO `task` (`task_id`, `task`, `status`, `date`) VALUES (?, ?, 'Pending', ?)");
 
-        // Bind the parameter
-        $stmt->bind_param("iss", $task, $date);
+        // Bind the parameters
+        $stmt->bind_param("iss", $task_id, $task, $date);
 
         // Execute the statement
         $stmt->execute();
@@ -28,5 +26,3 @@ if (isset($_POST['add'])) {
     }
 }
 ?>
-
-
