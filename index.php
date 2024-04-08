@@ -74,7 +74,7 @@ or die(mysqli_error($db));
                     // Loop through the result set and display each task
                     while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
                         echo "<tr class='border-bottom'>";
-                        echo "<td>{$raw['task_id']}</td>";
+                        echo "<td>{$row['task_id']}</td>";
                         echo "<td>{$row['task']}</td>";
                         echo "<td>{$row['status']}</td>";
                         echo "<td>{$row['date']}</td>";
