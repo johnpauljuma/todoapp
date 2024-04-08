@@ -65,34 +65,43 @@ or die(mysqli_error($db));
 		<?php
 				}*/
 				// Fetch tasks from the database using PDO
-				$stmt = $pdo->query("SELECT * FROM `task` ORDER BY `task_id` ASC");
-
-				// Check if the query was successful
-				if ($stmt !== false) {
-					$count = 1;
-					// Loop through the result set and display each task
-					while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
-						echo "<tr class='border-bottom'>";
-						echo "<td>{$row['task_id']}</td>";
-						echo "<td>{$row['task']}</td>";
-						echo "<td>{$row['status']}</td>";
-						echo "<td>{$row['date']}</td>";
-						echo "<td colspan='3' class='action'>";
-						if ($row['status'] != "Done") {
-							echo "<a href='update_task.php?task_id={$row['task_id']}' class='btn-completed'>Mark as Done</a>";
-							echo "<a href='edit_task.php?task_id={$row['task_id']}' class='btn-completed'>Edit</a>";
+				try {
+					$conn = new PDO("sqlsrv:server = tcp:jptodo.database.windows.net,1433; Database = todoapp", "jp", "myphpserver@1234");
+					$conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+					
+					// Fetch tasks from the database
+					$stmt = $conn->query("SELECT * FROM task ORDER BY task_id ASC");
+					
+					// Check if the query was successful
+					if ($stmt !== false) {
+						$count = 1;
+						// Loop through the result set and display each task
+						while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+							echo "<tr class='border-bottom'>";
+							echo "<td>{$row['task_id']}</td>";
+							echo "<td>{$row['task']}</td>";
+							echo "<td>{$row['status']}</td>";
+							echo "<td>{$row['date']}</td>";
+							echo "<td colspan='3' class='action'>";
+							if ($row['status'] != "Done") {
+								echo "<a href='update_task.php?task_id={$row['task_id']}' class='btn-completed'>Mark as Done</a>";
+								echo "<a href='edit_task.php?task_id={$row['task_id']}' class='btn-completed'>Edit</a>";
+							}
+							echo "<a href='delete_task.php?task_id={$row['task_id']}' class='btn-remove'>Delete</a>";
+							echo "</td>";
+							echo "</tr>";
+							$count++;
 						}
-						echo "<a href='delete_task.php?task_id={$row['task_id']}' class='btn-remove'>Delete</a>";
-						echo "</td>";
-						echo "</tr>";
-						$count++;
+					} else {
+						// Display an error message if the query failed
+						$errorInfo = $conn->errorInfo();
+						echo "<tr><td colspan='5'>Failed to fetch tasks. Error: {$errorInfo[2]}</td></tr>";
 					}
-				} else {
-					// Display an error message if the query failed
-					$errorInfo = $pdo->errorInfo();
-					echo "<tr><td colspan='5'>Failed to fetch tasks. Error: {$errorInfo[2]}</td></tr>";
+				} catch (PDOException $e) {
+					print("Error connecting to SQL Server.");
+					die(print_r($e));
 				}
-
+				
 			?>
 	</tbody>
 	</table>
