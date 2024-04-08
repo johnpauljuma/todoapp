@@ -10,7 +10,7 @@ if (isset($_POST['add'])) {
         $date = $_POST['date'];
 
         // Prepare the SQL statement
-        $stmt = $db->prepare("INSERT INTO `task` (`task`, `status`, `date`) VALUES (?, 'Pending', ?)");
+        $stmt = $db->prepare("INSERT INTO `task` (`task_id`, `status`, `date`) VALUES (?, 'Pending', ?)");
 
         // Bind the parameter
         $stmt->bind_param("iss", $task, $date);
