@@ -14,6 +14,8 @@
 <div class="container">
 	<div class="input-area">
 	<form method="POST" action="add_task.php">
+		<input type="text" name="task-id"
+				placeholder="Enter task ID" required />
 		<input type="text" name="task"
 				placeholder="Enter new task" required />
 		<input type="date" name="date" placeholder="Due date" required>

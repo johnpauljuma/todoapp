@@ -5,6 +5,7 @@ require_once 'config.php';
 
 if (isset($_POST['add'])) {
     if (!empty($_POST['task'])) {
+        $task_id = $_POST['task_id'];
         $task = $_POST['task'];
         $date = $_POST['date'];
 
@@ -12,7 +13,7 @@ if (isset($_POST['add'])) {
         $stmt = $db->prepare("INSERT INTO `task` (`task`, `status`, `date`) VALUES (?, 'Pending', ?)");
 
         // Bind the parameter
-        $stmt->bind_param("ss", $task, $date);
+        $stmt->bind_param("iss", $task, $date);
 
         // Execute the statement
         $stmt->execute();
