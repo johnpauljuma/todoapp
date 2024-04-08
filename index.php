@@ -14,10 +14,8 @@
 <div class="container">
 	<div class="input-area">
 	<form method="POST" action="add_task.php">
-		<input type="text" name="task-id"
-				placeholder="Enter task ID" required />
-		<input type="text" name="task"
-				placeholder="Enter new task" required />
+		<input type="text" name="task_id" placeholder="Enter task ID" required />
+		<input type="text" name="task" placeholder="Enter new task" required />
 		<input type="date" name="date" placeholder="Due date" required>
 		<button class="btn" name="add">
 			Add Task
@@ -45,7 +43,7 @@ or die(mysqli_error($db));
 					?>
 		<tr class="border-bottom">
 		<td>
-			<?php echo $count++ ?>
+			<?php echo $fetch['task_id']?>
 		</td>
 		<td>
 			<?php echo $fetch['task'] ?>
