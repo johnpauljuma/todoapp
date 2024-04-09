@@ -1,19 +1,20 @@
 <?php
-require 'config.php';
+require_once 'config.php';
 
 if (isset($_GET['task_id'])) {
     $task_id = $_GET['task_id'];
 
-    // Retrieve task details from the database
-    $stmt = $db->prepare("SELECT * FROM `task` WHERE `task_id` = ?");
-    $stmt->bind_param("i", $task_id);
-    $stmt->execute();
-    $result = $stmt->get_result();
-    $task = $result->fetch_assoc();
-
-    // Close the statement
-    $stmt->close();
+    try {
+        // Retrieve task details from the database
+        $stmt = $conn->prepare("SELECT * FROM task WHERE task_id = ?");
+        $stmt->bindParam(1, $task_id);
+        $stmt->execute();
+        $task = $stmt->fetch(PDO::FETCH_ASSOC);
+    } catch (PDOException $e) {
+        echo "Error: " . $e->getMessage(); // Display any errors
+    }
 }
+
 ?>
 
 <!DOCTYPE html>

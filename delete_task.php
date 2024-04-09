@@ -1,16 +1,24 @@
-// delete_task.php
-
 <?php
 require_once 'config.php';
 
 if ($_GET['task_id']) {
-	$task_id = $_GET['task_id'];
+    $task_id = $_GET['task_id'];
 
-	$deletingtasks = mysqli_query($db, 
-		"DELETE FROM `task` WHERE `task_id` = $task_id")
-		or
-		die(mysqli_error($db));
+    try {
+        // Prepare the SQL statement
+        $stmt = $conn->prepare("DELETE FROM task WHERE task_id = :task_id");
 
-	header("location: index.php");
+        // Bind the parameter
+        $stmt->bindParam(':task_id', $task_id);
+
+        // Execute the statement
+        $stmt->execute();
+
+        // Redirect to index.php
+        header("location: index.php");
+        exit();
+    } catch (PDOException $e) {
+        echo "Error: " . $e->getMessage(); // Display any errors
+    }
 }
 ?>
